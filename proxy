@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# Script to disable or enable the proxy 
+#
+while :
+do
+clear
+echo "************************"
+echo "* PROXY ENABLE *"
+echo "************************"
+echo "* [a] Enable    *"
+echo "* [b] Disable   *"
+echo "* [c] Create tunnel    *"
+echo "* [0] Exit/Stop *"
+echo "************************"
+echo -n "Enter your menu choice [a-0]: "
+read yourch
+case $yourch in
+a) networksetup -setsocksfirewallproxy Ethernet 127.0.0.1 8080 off 
+echo "The proxy is enabled, don't forget the tunnel!"; 
+read;
+;;
+b) networksetup -setsocksfirewallproxystate Ethernet off ;
+echo "The proxy is disabled"; 
+read;
+;;
+c) ssh -D 8080 -f -C -q -N <host>; 
+echo "Tunnel created to <host>";
+read;
+;;
+0) exit 0;;
+*) echo "Oopps!!! Please select choice 1,2,3 or 4";
+echo "Press Enter to continue. . ." ; read ;;
+esac
+done
